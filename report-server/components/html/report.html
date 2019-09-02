@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="../require.js" defer sync="true"></script>
+    <script src="../report.js"></script>
+    <title>System Vulnerabilities Validation Report</title>
+    <style>
+        div{
+            text-align:center;
+            margin:3px 5px;
+        }
+        webview{
+            background-color:ghostwhite;
+        }
+        .success{
+            background-color:rgb(241, 199, 170);
+        }
+        .fail{
+            background-color:lemonchiffon;
+        }
+    </style>
+  </head>
+  <body>
+    <p style="text-align: center">用户: <span id="user">test</span>，目标IP：<span id=targetIP></span>，
+        目标OS：<span id="os"></span>，共发现 <span id=susNum></span> 个漏洞，
+        验证成功 <span id=sucNum></span> 个漏洞。</p>
+    <webview id="info" style="background-color:ghostwhite;" allowpopups disablewebsecurity  plugins>
+        <!--<button id="refresh" style:"text-align:center">refresh</button>-->
+        <div id="pieChart" max-width="100%" height="auto"></div>
+        <div id="vulDetail" max-width="100%" height="auto"></div>
+    </webview>
+    <script src="../d3.min.js"></script>
+    <script src="../d3pie.min.js"></script>
+    <script>
+    window.onload = ()=>{
+    var pieChart = document.getElementById("pieChart");  
+    var susNum = window.localStorage.getItem('susNum');
+    var sucNum = window.localStorage.getItem('sucNum');
+    var failNum = Number(susNum) - Number(sucNum);
+    sucNum = Number(sucNum);
+    console.log("suc:"+sucNum);
+    console.log("fail:"+failNum);
+
+    var pie = new d3pie(pieChart, {
+       	"header": {
+		"title": {
+			"text": "Vulnerability Statistics",
+			"fontSize": 22,
+			"font": "open sans"
+		},
+	},
+	"footer": {
+		"color": "#999999",
+		"fontSize": 10,
+		"font": "open sans",
+		"location": "bottom-left"
+	},
+	"size": {
+		"canvasWidth": 590,
+		"pieOuterRadius": "90%"
+	},
+	"data": {
+		"sortOrder": "value-desc",
+		"content": [
+			{
+				"label": "验证未成功 "+String(failNum),
+				"value": failNum,
+				"color": "#F9D64B"
+			},
+			{
+				"label": "验证成功 "+String(sucNum),
+				"value": sucNum,
+				"color": "#ED5757"
+			}
+		]
+	},
+	"labels": {
+		"percentage": {
+			"color": "#ffffff",
+			"decimalPlaces": 0
+		},
+		"value": {
+			"color": "#adadad",
+			"fontSize": 11
+		}
+	},
+	"effects": {
+		"pullOutSegmentOnClick": {
+			"effect": "linear",
+			"speed": 400,
+			"size": 8
+		}
+	},
+	"misc": {
+		"gradient": {
+			"enabled": true,
+			"percentage": 100
+		}
+	}
+});
+};
+window.localStorage.setItem('user','');
+    </script>
+  </body>
+</html>

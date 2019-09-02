@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "nodejs",
+            "program": "${workspaceFolder}/components/sql.js",
+            "sourceMaps": true,
+            //"preLaunchTask": "build" // 等于下面`label`值
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Electron Main",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "program": "${workspaceFolder}/main.js",
+            "protocol": "inspector" //添加默认的协议是legacy，这个协议导致不进入断点
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Electron renderer",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "program": "${workspaceFolder}/components/sql.js",
+            "protocol": "inspector" //添加默认的协议是legacy，这个协议导致不进入断点
+        },
+    ]
+}

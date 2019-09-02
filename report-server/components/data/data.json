@@ -1,0 +1,17 @@
+{
+    "cve_info":
+    [
+        "Name",
+        "Status",
+        "Description",    
+        "References",
+        "Phase"
+    ],
+    "mysql":{
+        "host":"localhost",
+        "user":"great",
+        "pass":"greatwork",
+        "database":"cve",
+        "table":"info"
+    }
+}
